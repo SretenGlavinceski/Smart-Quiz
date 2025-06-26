@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Topics</title>
+  <link href="bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container my-4">
+    <h2 class="mb-4">Choose a Topic</h2>
+    <div id="section-list" class="row gy-3"></div>
+  </div>
+
+  <script src="bootstrap/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('section-list');
+
+      fetch('http://localhost:9999/api/sections/')
+        .then(res => res.json())
+        .then(sections => {
+          sections.forEach(section => {
+            const card = document.createElement('div');
+            card.className = 'col-md-4';
+            card.innerHTML = `
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">${section.section_name}</h5>
+                  <p class="card-text">${section.description ?? ''}</p>
+                  <a href="quiz.html?section_id=${section.id}" class="btn btn-primary">Start Quiz</a>
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        })
+        .catch(err => {
+          container.innerHTML = '<p class="text-danger">Failed to load sections.</p>';
+          console.error(err);
+        });
+    });
+  </script>
+</body>
+</html>

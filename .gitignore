@@ -1,0 +1,46 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Django specific
+/static/
+media/
+db.sqlite3
+*.pot
+*.pyc
+*.pyo
+
+# --- Environment files ---
+.env
+.env.*
+
+# --- Docker ---
+*.pid
+*.seed
+*.tar
+*.log
+*.bak
+docker-compose.override.yml
+
+# --- Node / React frontend ---
+node_modules/
+build/
+dist/
+*.log
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Misc ---
+*.bak
+*.tmp
+*.swp
