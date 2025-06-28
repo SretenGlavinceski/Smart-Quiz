@@ -22,7 +22,8 @@ services:
       retries: 10
 
   backend:
-    image: sretenglavinceski/devops-project-backend:latest
+    # image: sretenglavinceski/devops-project-backend:latest
+    image: backend-test
     restart: always
     depends_on:
       db:
@@ -39,7 +40,8 @@ services:
       - quiznet
 
   frontend:
-    image: sretenglavinceski/devops-project-frontend:latest
+    # image: sretenglavinceski/devops-project-frontend:latest
+    image: frontend-test
     restart: always
     depends_on:
       - backend
@@ -47,6 +49,10 @@ services:
       - "9091:80"
     networks:
       - quiznet
+
+    command: >
+      sh -c "echo 'window.API_BASE_URL=\"http://localhost:9999/api\";' > /usr/share/nginx/html/env-config.js &&
+            nginx -g 'daemon off;'"
 
 volumes:
   pgdata:

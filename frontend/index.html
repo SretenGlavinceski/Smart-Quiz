@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Quiz Topics</title>
   <link href="bootstrap/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="env-config.js"></script>
 </head>
 <body>
   <div class="container my-4">
@@ -17,7 +18,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('section-list');
 
-      fetch('http://backend-service:9999/api/sections/')
+      fetch(`${window.API_BASE_URL}/sections/`)
         .then(res => res.json())
         .then(sections => {
           sections.forEach(section => {
