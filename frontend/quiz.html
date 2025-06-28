@@ -72,7 +72,7 @@
 
     let questions = [];
 
-    fetch(`http://localhost:9999/api/sections/${sectionId}/questions/`)
+    fetch(`http://backend-service:9999/api/sections/${sectionId}/questions/`)
       .then((res) => res.json())
       .then((data) => {
         questions = data;
@@ -158,7 +158,7 @@
                 answers: answers
             };
 
-            fetch(`http://localhost:9999/api/sections/${sectionId}/questions/add/`, {
+            fetch(`http://backend-service:9999/api/sections/${sectionId}/questions/add/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

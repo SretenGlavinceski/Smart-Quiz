@@ -17,7 +17,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('section-list');
 
-      fetch('http://localhost:9999/api/sections/')
+      fetch('http://backend-service:9999/api/sections/')
         .then(res => res.json())
         .then(sections => {
           sections.forEach(section => {
