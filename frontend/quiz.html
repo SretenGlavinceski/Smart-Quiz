@@ -32,6 +32,36 @@
     </div>
   </div>
 
+  <hr class="my-5">
+  
+  <div class="container">
+    <h4>Add a New Question</h4>
+    <form id="add-question-form">
+        <div class="mb-3">
+            <label class="form-label">Question Text</label>
+            <input type="text" id="question-text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Answers</label>
+            <input type="text" class="form-control mb-2" placeholder="Answer 1" required>
+            <input type="text" class="form-control mb-2" placeholder="Answer 2" required>
+            <input type="text" class="form-control mb-2" placeholder="Answer 3" required>
+            <input type="text" class="form-control mb-2" placeholder="Answer 4" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Correct Answer</label>
+            <select id="correct-index" class="form-select" required>
+                <option value="0">Answer 1</option>
+                <option value="1">Answer 2</option>
+                <option value="2">Answer 3</option>
+                <option value="3">Answer 4</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Submit Question</button>
+    </form>
+  </div>
+
+
   <script src="bootstrap/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
 
   <script>
@@ -104,6 +134,68 @@
       const modal = new bootstrap.Modal(document.getElementById("scoreModal"));
       modal.show();
     });
+
+    document.getElementById('add-question-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const sectionId = new URLSearchParams(window.location.search).get('section_id');
+            if (!sectionId) {
+                alert('Section ID not found in URL!');
+                return;
+            }
+
+            const questionText = document.getElementById('question-text').value;
+            const answerInputs = document.querySelectorAll('#add-question-form input[type="text"]:not(#question-text)');
+            const correctIndex = parseInt(document.getElementById('correct-index').value);
+
+            const answers = Array.from(answerInputs).map((input, i) => ({
+                text: input.value,
+                is_correct: i === correctIndex
+            }));
+
+            const payload = {
+                text: questionText,
+                answers: answers
+            };
+
+            fetch(`http://localhost:9999/api/sections/${sectionId}/questions/add/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    alert('✅ Question added successfully!');
+                    document.getElementById('add-question-form').reset();
+                    location.reload();
+                } else {
+                    alert('❌ Failed: ' + data.message);
+                }
+            })
+            .catch(err => {
+                alert('❌ Error submitting question.');
+            });
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
   </script>
 </body>
 </html>

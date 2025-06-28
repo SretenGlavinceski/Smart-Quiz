@@ -22,7 +22,7 @@ services:
       retries: 10
 
   backend:
-    image: sretenglavinceski/devops-project-backend:1.0
+    image: sretenglavinceski/devops-project-backend:latest
     restart: always
     depends_on:
       db:
@@ -39,7 +39,7 @@ services:
       - quiznet
 
   frontend:
-    image: sretenglavinceski/devops-project-frontend:1.0
+    image: sretenglavinceski/devops-project-frontend:latest
     restart: always
     depends_on:
       - backend
