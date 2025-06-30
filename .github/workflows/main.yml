@@ -1,4 +1,4 @@
-name: Build & Push Docker Images, and Deploy changes to k8s Cluster 
+name: Build & Push Docker Images, and Deploy changes to Kubernetes Cluster 
 
 on:
   push:
