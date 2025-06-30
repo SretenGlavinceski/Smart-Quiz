@@ -47,6 +47,11 @@ jobs:
         run: |
           kubectl config use-context k3d-cicd-cluster
 
+      - name: Set Kubernetes Context
+        run: kubectl config use-context k3d-cicd-cluster
+        env:
+          KUBECONFIG: C:\Users\glavi\.kube\config
+
       - name: Update Backend Deployment in k8s
         run: |
           kubectl set image deployment/backend-deploy backend-ctr=sretenglavinceski/devops-project-backend:latest -n smart-quiz-app
