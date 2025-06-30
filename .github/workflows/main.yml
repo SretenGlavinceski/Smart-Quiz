@@ -34,29 +34,25 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: sretenglavinceski/devops-project-frontend:latest
-  
+    
   deploy:
     needs: build-and-push
     runs-on: self-hosted
-  
+    env:
+      KUBECONFIG: C:\Users\glavi\.kube\config
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
   
       - name: Set Kubernetes Context
         run: kubectl config use-context k3d-cicd-cluster
-        env:
-          KUBECONFIG: C:\Users\glavi\.kube\config
-        shell: pwsh
+        shell: powershell
   
       - name: Update Backend Deployment in k8s
         run: kubectl set image deployment/backend-deploy backend-ctr=sretenglavinceski/devops-project-backend:latest -n smart-quiz-app
-        shell: pwsh
-        env:
-          KUBECONFIG: C:\Users\glavi\.kube\config
+        shell: powershell
   
       - name: Update Frontend Deployment in k8s
         run: kubectl set image deployment/frontend-deploy frontend-ctr=sretenglavinceski/devops-project-frontend:latest -n smart-quiz-app
-        shell: pwsh
-        env:
-          KUBECONFIG: C:\Users\glavi\.kube\config
+        shell: powershell
+
