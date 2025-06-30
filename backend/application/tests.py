@@ -4,8 +4,8 @@ from application.models import Section
 class SectionExistenceTest(TestCase):
 
     def setUp(self):
-        Section.objects.create(name="Section 1")
-        Section.objects.create(name="Section 2")
+        Section.objects.create(section_name="Section 1", description="abc")
+        Section.objects.create(section_name="Section 2", description="abc")
 
     def test_at_least_two_sections_exist(self):
         count = Section.objects.count()
