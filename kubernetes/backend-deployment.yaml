@@ -40,6 +40,7 @@ spec:
           image: sretenglavinceski/devops-project-backend:latest
           ports:
             - containerPort: 8080
+          imagePullPolicy: Always
           env:
             - name: POSTGRES_DB
               valueFrom:

@@ -27,6 +27,7 @@ spec:
           image: sretenglavinceski/devops-project-frontend:latest
           ports:
             - containerPort: 80
+          imagePullPolicy: Always
           volumeMounts:
             - name: env-config-volume
               mountPath: /usr/share/nginx/html/env-config.js
