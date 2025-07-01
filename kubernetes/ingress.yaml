@@ -16,11 +16,13 @@ metadata:
   namespace: smart-quiz-app
   annotations:
     kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web
     traefik.ingress.kubernetes.io/router.middlewares: smart-quiz-app-strip-backend-prefix@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
-    - http:
+    - host: smartquiz.home
+      http:
         paths:
           - path: /backend
             pathType: Prefix

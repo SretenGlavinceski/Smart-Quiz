@@ -13,4 +13,5 @@ COPY index.html quiz.html ./
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY entrypoint.sh .
+CMD ["sh", "entrypoint.sh"]

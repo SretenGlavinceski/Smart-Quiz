@@ -38,7 +38,7 @@ metadata:
   namespace: smart-quiz-app
 spec:
   serviceName: "postgres-service"
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: quiz-db

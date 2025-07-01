@@ -33,6 +33,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
+
+      
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: 'True'
+
     ports:
       - "9999:8080"
     networks:
@@ -45,12 +50,10 @@ services:
       - backend
     ports:
       - "9091:80"
+    environment:
+      API_BASE_URL: ${API_BASE_URL}
     networks:
       - quiznet
-
-    command: >
-      sh -c "echo 'window.API_BASE_URL=\"http://localhost:9999/api\";' > /usr/share/nginx/html/env-config.js &&
-            nginx -g 'daemon off;'"
 
 volumes:
   pgdata:

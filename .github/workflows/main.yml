@@ -64,7 +64,7 @@ jobs:
             sretenglavinceski/devops-project-frontend:latest
             sretenglavinceski/devops-project-frontend:${{ env.IMAGE_TAG }}
     
-  deploy:
+  deploy-local:
     needs: build-and-push
     runs-on: self-hosted
     env:
@@ -86,3 +86,23 @@ jobs:
       - name: Update Frontend Deployment in k8s
         run: kubectl set image deployment/frontend-deploy frontend-ctr=sretenglavinceski/devops-project-frontend:${{ env.IMAGE_TAG }} -n smart-quiz-app
         shell: powershell
+  
+  deploy-cloud:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 
+
+      - name: Trigger Backend Deploy on Render
+        uses: JorgeLNJunior/render-deploy@v1.4.5
+        with:
+          service_id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+
+      - name: Trigger Frontend Deploy on Render
+        uses: JorgeLNJunior/render-deploy@v1.4.5
+        with:
+          service_id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
